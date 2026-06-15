@@ -2,11 +2,7 @@
   "crons": [
     {
       "path": "/api/weather/sync",
-      "schedule": "0 0,12 * * *"
-    },
-    {
-      "path": "/api/sync-warnings",
-      "schedule": "0 0,12 * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }
