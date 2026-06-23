@@ -114,8 +114,7 @@ export async function GET(request: Request) {
     const { data: shelters, error: sheltersError } = await supabaseAdmin
       .from('shelters')
       .select('*')
-      .in('districtid', validDistrictIds)
-      .eq('status', 'Active');
+      .in('districtid', validDistrictIds);
 
     if (sheltersError) console.warn('Shelters fetch exception:', sheltersError);
 
