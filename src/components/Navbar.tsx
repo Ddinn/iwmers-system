@@ -62,7 +62,7 @@ export default function Navbar() {
                 <ShieldAlert size={20} className="text-white" />
               </div>
               <div>
-                <span className="text-xl font-bold tracking-tight text-slate-100 leading-none block">EcoGuard</span>
+                <span className="text-xl font-bold tracking-tight text-slate-100 leading-none block">Atmos</span>
                 <span className="hidden sm:block text-[10px] font-bold tracking-widest text-slate-400 uppercase leading-none mt-0.5">
                   IWMERS System
                 </span>

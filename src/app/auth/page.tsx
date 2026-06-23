@@ -109,7 +109,7 @@ export default function AuthPage() {
             <Zap size={28} color="#fff" strokeWidth={2.5} />
           </div>
           <div className="text-center">
-            <div style={{ color: "#2563EB", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase" }}>EcoGuard</div>
+            <div style={{ color: "#2563EB", fontSize: 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase" }}>Atmos</div>
             <h1 style={{ color: "#E2E8F0", fontSize: 22, fontWeight: 700, marginTop: 4, lineHeight: 1.3 }}>
               {isLogin ? 'Welcome to Command' : 'Create Operator Account'}
             </h1>

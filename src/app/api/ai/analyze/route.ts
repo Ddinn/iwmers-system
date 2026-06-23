@@ -68,7 +68,7 @@ export async function GET() {
       }
 
       const prompt = `
-        You are the analytical engine for EcoGuard, a weather-driven disaster risk monitoring and early warning system. 
+        You are the analytical engine for Atmos, a weather-driven disaster risk monitoring and early warning system. 
         Analyze the following weather forecast and physical telemetry data for the district of ${district.districtname}, Malaysia.
         
         Raw Data: ${JSON.stringify(forecastData)}

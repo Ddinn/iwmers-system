@@ -7,7 +7,7 @@ import RealtimeAlertListener from "@/components/RealtimeAlertListener"; // 👈 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "EcoGuard | IWMERS",
+  title: "Atmos | IWMERS",
   description: "Integrated Weather Monitoring and Emergency Response System",
 };
 

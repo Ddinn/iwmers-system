@@ -93,7 +93,7 @@ export default function AdminCommandCenter() {
       
       <div className="mb-8 border-b border-slate-800 pb-4">
         <h1 className="text-2xl font-bold flex items-center gap-2 text-rose-500">
-          <ShieldAlert /> EcoGuard Command Center
+          <ShieldAlert /> Atmos Command Center
         </h1>
         <p className="text-slate-400 text-sm mt-1">Restricted Access: System Overrides & Logistics</p>
       </div>
