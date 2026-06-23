@@ -33,7 +33,7 @@ export default function AdminCommandCenter() {
 
     const loadAdminData = async () => {
       try {
-        const res = await fetch('/api/dashboard?state=Melaka');
+        const res = await fetch('/api/dashboard?state=Melaka', { cache: 'no-store' });
         const data = await res.json();
         
         if (isMounted && data.success) {
