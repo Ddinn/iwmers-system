@@ -30,32 +30,12 @@ export async function GET() {
     let totalAnalysesGenerated = 0;
 
     for (const district of districts) {
-      console.log(`Checking status for ${district.districtid}: ${district.districtname}...`);
-
-      // 👇 THE FIX: FRESHNESS CHECK TO PREVENT API ERRORS 👇
-      // Check if we already generated an analysis in the last 4 hours
-      const { data: existingAnalysis } = await supabaseAdmin
-        .from('aianalysis')
-        .select('generatedat')
-        .eq('districtid', district.districtid)
-        .order('generatedat', { ascending: false })
-        .limit(1)
-        .single();
-
-      if (existingAnalysis && existingAnalysis.generatedat) {
-        const lastGenerated = new Date(existingAnalysis.generatedat).getTime();
-        const fourHoursAgo = Date.now() - (4 * 60 * 60 * 1000);
-        
-        if (lastGenerated > fourHoursAgo) {
-          console.log(`✅ Analysis for ${district.districtname} is fresh (less than 4 hours old). Skipping Gemini API to save quota.`);
-          continue; // Skip the Gemini call completely!
-        }
-      }
-      // 👆 END OF FRESHNESS CHECK 👆
+      console.log(`Analyzing weather data for ${district.districtid}: ${district.districtname}...`);
 
       let forecastData = null;
       let forecastError = null;
       
+      // FIX: Changed order to 'createdat' descending to get the LATEST scraped telemetry first
       const result1 = await supabaseAdmin
         .from('weatherforecast')
         .select('datatype, value, validfrom, validto, unit')
@@ -65,7 +45,7 @@ export async function GET() {
       
       if (!result1.error && result1.data && result1.data.length > 0) {
         forecastData = result1.data;
-        console.log(`Found ${forecastData.length} recent records for district ${district.districtname}`);
+        console.log(`Found ${forecastData.length} recent records for district ${district.districtname} (Method 1)`);
       } else {
         console.log(`No district-specific data found for ${district.districtname}, trying fallback...`);
         const result2 = await supabaseAdmin
@@ -76,6 +56,7 @@ export async function GET() {
         
         if (!result2.error && result2.data && result2.data.length > 0) {
           forecastData = result2.data;
+          console.log(`Found ${forecastData.length} latest weather records for fallback analysis`);
         } else {
           forecastError = result2.error;
         }
@@ -106,16 +87,16 @@ export async function GET() {
 
       try {
         await delay(2000); 
-        console.log('Calling Gemini API with model: gemini-1.5-flash');
+        console.log('Calling Gemini API with model: gemini-3.5-Flash');
 
-        // 👇 THE FIX: STRICTLY ENFORCED OFFICIAL MODEL NAME 👇
         const model = genAI.getGenerativeModel({ 
-          model: "gemini-1.5-flash", 
+          model: "gemini-3.5-Flash",
           generationConfig: { responseMimeType: "application/json" }
         });
 
         const response = await model.generateContent(prompt);
         const responseText = response.response.text();
+        console.log(`Gemini Response for ${district.districtname}:`, responseText);
         
         if (responseText) {
           let aiOutput;
@@ -147,7 +128,7 @@ export async function GET() {
 
           if (insertError) throw insertError;
           totalAnalysesGenerated++;
-          console.log(`✅ AI Analysis saved to database for ${district.districtname}`);
+          console.log(`✅ AI Analysis saved for ${district.districtname}`);
         }
       } catch (aiError: unknown) {
         const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
@@ -173,7 +154,7 @@ export async function GET() {
 
     return NextResponse.json({ 
       success: true, 
-      message: `Successfully processed districts. Generated ${totalAnalysesGenerated} new AI analyses.` 
+      message: `Successfully generated and saved ${totalAnalysesGenerated} AI analyses for Melaka using live rainfall data.` 
     });
 
   } catch (error: unknown) {
