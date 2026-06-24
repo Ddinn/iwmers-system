@@ -88,7 +88,7 @@ export default function AuthPage() {
     border: "1px solid #334155",
     borderRadius: "12px",
     padding: "12px 14px 12px 40px",
-    color: "#E2E8F0",
+    color: "#0F172A",
     fontSize: "14px",
     outline: "none",
     transition: "border-color 0.2s",
