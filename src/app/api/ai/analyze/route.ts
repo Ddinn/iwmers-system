@@ -87,10 +87,10 @@ export async function GET() {
 
       try {
         await delay(2000); 
-        console.log('Calling Gemini API with model: gemini-2.5-pro');
+        console.log('Calling Gemini API with model: gemini-2.5-Pro');
 
         const model = genAI.getGenerativeModel({ 
-          model: "gemini-2.5-pro",
+          model: "gemini-2.5-Pro",
           generationConfig: { responseMimeType: "application/json" }
         });
 
