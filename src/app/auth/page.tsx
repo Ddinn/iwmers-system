@@ -84,8 +84,8 @@ export default function AuthPage() {
 
   const inputStyle = {
     width: "100%",
-    background: "#1E293B",
-    border: "1px solid #334155",
+    background: "#FFFFFF",
+    border: "1px solid #CBD5E1",
     borderRadius: "12px",
     padding: "12px 14px 12px 40px",
     color: "#0F172A",
